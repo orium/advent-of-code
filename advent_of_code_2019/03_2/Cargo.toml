@@ -1,0 +1,8 @@
+[package]
+name = "advent_of_code_2019_03_2"
+version = "0.1.0"
+authors = ["Diogo Sousa <diogogsousa@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+ndarray = "0.13"
