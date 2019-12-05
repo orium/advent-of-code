@@ -46,6 +46,10 @@ name = "advent_of_code_2019_05_1"
 version = "0.1.0"
 
 [[package]]
+name = "advent_of_code_2019_05_2"
+version = "0.1.0"
+
+[[package]]
 name = "autocfg"
 version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
