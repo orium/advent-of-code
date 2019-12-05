@@ -20,7 +20,8 @@ fn check_conditions(n: u32) -> bool {
     let exploded = explode(n);
 
     let ascending = exploded.iter().tuple_windows().all(|(n, m)| n <= m);
-    let exactly_two = exploded.iter().group_by(|&&v| v).into_iter().map(|(_, g)| g.count()).any(|c| c == 2);
+    let exactly_two =
+        exploded.iter().group_by(|&&v| v).into_iter().map(|(_, g)| g.count()).any(|c| c == 2);
 
     ascending && exactly_two
 }
