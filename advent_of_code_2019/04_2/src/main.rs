@@ -1,4 +1,4 @@
-use itertools::{Itertools, PeekingNext};
+use itertools::Itertools;
 
 const FROM: u32 = 172851;
 const TO: u32 = 675869;
@@ -16,29 +16,11 @@ fn explode(mut n: u32) -> [u8; 6] {
     r
 }
 
-fn dedup_with_count<I: Iterator>(iterator: I) -> impl Iterator<Item=(usize, I::Item)>
-    where
-        I: PeekingNext,
-        I::Item: Eq
-{
-    iterator.batching(|it| {
-        match it.next() {
-            Some(v) => {
-                let count =
-                    1 + it.peeking_take_while(|e| *e == v).count();
-
-                Some((count, v))
-            }
-            None => None
-        }
-    })
-}
-
 fn check_conditions(n: u32) -> bool {
     let exploded = explode(n);
 
     let ascending = exploded.iter().tuple_windows().all(|(n, m)| n <= m);
-    let exactly_two = dedup_with_count(exploded.iter()).any(|(c, _)| c == 2);
+    let exactly_two = exploded.iter().group_by(|&&v| v).into_iter().map(|(_, g)| g.count()).any(|c| c == 2);
 
     ascending && exactly_two
 }
