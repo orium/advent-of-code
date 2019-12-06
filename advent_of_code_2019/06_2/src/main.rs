@@ -81,7 +81,7 @@ fn distance_bfs(graph: &Graph<String>, start: &str, dest: &str) -> Option<u32> {
 
 fn main() -> io::Result<()> {
     let graph = read_graph(io::stdin())?;
-    let distance = distance_bfs(&graph, &"YOU", &"SAN").unwrap() - 2;
+    let distance = distance_bfs(&graph, &"46L", &"3FH").unwrap();
 
     println!("{}", distance);
 

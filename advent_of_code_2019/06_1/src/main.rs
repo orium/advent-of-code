@@ -54,24 +54,35 @@ fn read_graph<R: Read>(reader: R) -> io::Result<Graph<String>> {
     Ok(graph)
 }
 
-fn count_reachable_by<'a>(graph: &'a Graph<String>, node: &'a str) -> u32 {
+fn count_reachable_by<'a>(
+    graph: &'a Graph<String>,
+    node: &'a str,
+    counts: &mut HashMap<&'a str, Option<u32>>,
+) -> u32 {
+    if let Some(Some(count)) = counts.get(node) {
+        return *count;
+    }
+
     let mut count = 0;
 
     if let Some(it) = graph.successors(node) {
         for succ in it {
-            count += 1 + count_reachable_by(graph, succ);
+            count += 1 + count_reachable_by(graph, succ, counts);
         }
     }
+
+    counts.insert(node, Some(count));
 
     count
 }
 
 fn main() -> io::Result<()> {
     let graph = read_graph(io::stdin())?;
+    let mut counts: HashMap<&str, Option<u32>> = HashMap::new();
     let mut count = 0;
 
     for node in graph.nodes() {
-        count += count_reachable_by(&graph, node);
+        count += count_reachable_by(&graph, node, &mut counts);
     }
 
     println!("{}", count);
