@@ -1,5 +1,5 @@
 use std::borrow::Borrow;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::hash::Hash;
 use std::io;
 use std::io::{BufRead, BufReader, Read};
@@ -48,33 +48,42 @@ fn read_graph<R: Read>(reader: R) -> io::Result<Graph<String>> {
         let center = it.next().unwrap().trim().to_owned();
         let orbiter = it.next().unwrap().trim().to_owned();
 
-        graph.add_edge(orbiter, center);
+        graph.add_edge(orbiter.clone(), center.clone());
+        graph.add_edge(center, orbiter);
     }
 
     Ok(graph)
 }
 
-fn count_reachable_by<'a>(graph: &'a Graph<String>, node: &'a str) -> u32 {
-    let mut count = 0;
+fn distance_bfs(graph: &Graph<String>, start: &str, dest: &str) -> Option<u32> {
+    let mut queue: VecDeque<(u32, &str)> = VecDeque::new();
+    let mut enqueue: HashSet<String> = HashSet::new();
 
-    if let Some(it) = graph.successors(node) {
-        for succ in it {
-            count += 1 + count_reachable_by(graph, succ);
+    queue.push_back((0, start));
+    enqueue.insert(start.to_owned());
+
+    while let Some((distance, node)) = queue.pop_front() {
+        if node == dest {
+            return Some(distance);
+        }
+        if let Some(it) = graph.successors(node) {
+            for succ in it {
+                if !enqueue.contains(succ) {
+                    queue.push_back((distance + 1, succ));
+                    enqueue.insert(succ.clone());
+                }
+            }
         }
     }
 
-    count
+    None
 }
 
 fn main() -> io::Result<()> {
     let graph = read_graph(io::stdin())?;
-    let mut count = 0;
+    let distance = distance_bfs(&graph, &"YOU", &"SAN").unwrap() - 2;
 
-    for node in graph.nodes() {
-        count += count_reachable_by(&graph, node);
-    }
-
-    println!("{}", count);
+    println!("{}", distance);
 
     Ok(())
 }
