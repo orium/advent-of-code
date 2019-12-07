@@ -1,4 +1,5 @@
 use itertools::Itertools;
+use std::collections::VecDeque;
 use std::io;
 use std::io::{BufRead, BufReader, Read};
 
@@ -21,11 +22,19 @@ impl From<u32> for AddressingMode {
 pub struct Computer {
     memory: Vec<i32>,
     program_counter: usize,
+    input_stream: VecDeque<i32>,
+}
+
+#[derive(Eq, PartialEq, Debug)]
+pub enum State {
+    AwaitingInput,
+    Outputed(i32),
+    Halted,
 }
 
 impl Computer {
     pub fn new(memory: Vec<i32>) -> Computer {
-        Computer { memory, program_counter: 0 }
+        Computer { memory, program_counter: 0, input_stream: VecDeque::new() }
     }
 
     pub fn load_program<R: Read>(reader: R) -> io::Result<Computer> {
@@ -44,9 +53,11 @@ impl Computer {
         }
     }
 
-    pub fn run(&mut self, mut input: impl Iterator<Item = i32>) -> Vec<i32> {
-        let mut output: Vec<i32> = Vec::new();
+    pub fn enqueue_input(&mut self, v: i32) {
+        self.input_stream.push_back(v);
+    }
 
+    pub fn run(&mut self) -> State {
         loop {
             let opcode = self.memory[self.program_counter] % 100;
             let address_mode = |position: u8| -> AddressingMode {
@@ -72,7 +83,11 @@ impl Computer {
                     self.program_counter += 4;
                 }
                 3 => {
-                    let v: i32 = input.next().expect("No more input");
+                    let v: i32 = match self.input_stream.pop_front() {
+                        Some(v) => v,
+                        None => return State::AwaitingInput,
+                    };
+
                     let addr = self.memory[self.program_counter + 1] as usize;
                     self.memory[addr] = v;
                     self.program_counter += 2;
@@ -80,8 +95,8 @@ impl Computer {
                 4 => {
                     let v =
                         self.read_argument(self.memory[self.program_counter + 1], address_mode(0));
-                    output.push(v);
                     self.program_counter += 2;
+                    return State::Outputed(v);
                 }
                 5 | 6 => {
                     let jump_on: bool = opcode == 5;
@@ -110,26 +125,38 @@ impl Computer {
 
                     self.program_counter += 4;
                 }
-                99 => break,
+                99 => return State::Halted,
                 opcode => panic!("Invalid opcode {}", opcode),
             }
         }
-
-        output
     }
 }
 
 fn compute_amplification(original_computer: &Computer, phases: &[i32]) -> i32 {
-    let mut last_output = 0;
+    let mut computers = vec![original_computer.clone(); phases.len()];
 
-    for &phase in phases {
-        let mut computer = original_computer.clone();
-        let input_stream: Vec<i32> = vec![phase, last_output];
-        let output = computer.run(input_stream.iter().map(|v| *v));
-        last_output = output[0];
+    // Initialize phases.
+    for (computer, &phase) in computers.iter_mut().zip(phases) {
+        computer.enqueue_input(phase);
     }
 
-    last_output
+    let mut last_output: i32 = 0;
+    let mut amplification = 0;
+
+    'driver_loop: loop {
+        for computer in computers.iter_mut() {
+            computer.enqueue_input(last_output);
+            match computer.run() {
+                State::AwaitingInput => unreachable!(),
+                State::Halted => break 'driver_loop,
+                State::Outputed(v) => last_output = v,
+            }
+        }
+
+        amplification = last_output;
+    }
+
+    amplification
 }
 
 fn main() -> io::Result<()> {
@@ -137,7 +164,7 @@ fn main() -> io::Result<()> {
     let original_computer = Computer::load_program(std::io::stdin())?;
     let mut best_amplification = std::i32::MIN;
 
-    for phases in (0..=4).permutations(LENGTH) {
+    for phases in (5..=9).permutations(LENGTH) {
         let amplification = compute_amplification(&original_computer, &phases);
         best_amplification = best_amplification.max(amplification);
     }
