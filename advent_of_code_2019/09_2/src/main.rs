@@ -3,10 +3,10 @@ use num::bigint::ToBigInt;
 use num::Zero;
 use num::{BigInt, ToPrimitive};
 use std::collections::{HashMap, VecDeque};
+use std::fs::File;
 use std::io;
 use std::io::{BufRead, BufReader, Read, Write};
 use std::ops::{Index, IndexMut};
-use std::fs::File;
 
 pub enum AddressingMode {
     Position,
@@ -128,10 +128,14 @@ impl Computer {
 
             match opcode {
                 1 | 2 => {
-                    let v0 = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 1], address_mode(0));
-                    let v1 = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 2], address_mode(1));
+                    let v0 = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 1],
+                        address_mode(0),
+                    );
+                    let v1 = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 2],
+                        address_mode(1),
+                    );
 
                     let result = match opcode {
                         1 => v0 + v1,
@@ -139,7 +143,11 @@ impl Computer {
                         _ => unreachable!(),
                     };
 
-                    self.store_result(self.memory[self.program_counter.clone() + 3].clone(), result, address_mode(2));
+                    self.store_result(
+                        self.memory[self.program_counter.clone() + 3].clone(),
+                        result,
+                        address_mode(2),
+                    );
 
                     self.program_counter += 4;
                 }
@@ -149,22 +157,32 @@ impl Computer {
                         None => return State::AwaitingInput,
                     };
 
-                    self.store_result(self.memory[self.program_counter.clone() + 1].clone(), v, address_mode(0));
+                    self.store_result(
+                        self.memory[self.program_counter.clone() + 1].clone(),
+                        v,
+                        address_mode(0),
+                    );
 
                     self.program_counter += 2;
                 }
                 4 => {
-                    let v = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 1], address_mode(0));
+                    let v = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 1],
+                        address_mode(0),
+                    );
                     self.program_counter += 2;
                     return State::Outputed(v);
                 }
                 5 | 6 => {
                     let jump_on: bool = opcode == 5;
-                    let cond = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 1], address_mode(0));
-                    let jump_to = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 2], address_mode(1));
+                    let cond = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 1],
+                        address_mode(0),
+                    );
+                    let jump_to = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 2],
+                        address_mode(1),
+                    );
 
                     self.program_counter = match (cond != BigInt::zero()) == jump_on {
                         true => jump_to,
@@ -172,10 +190,14 @@ impl Computer {
                     };
                 }
                 7 | 8 => {
-                    let v0 = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 1], address_mode(0));
-                    let v1 = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 2], address_mode(1));
+                    let v0 = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 1],
+                        address_mode(0),
+                    );
+                    let v1 = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 2],
+                        address_mode(1),
+                    );
 
                     let result = match opcode {
                         7 => (v0 < v1) as u32,
@@ -185,13 +207,19 @@ impl Computer {
                     .to_bigint()
                     .unwrap();
 
-                    self.store_result(self.memory[self.program_counter.clone() + 3].clone(), result, address_mode(2));
+                    self.store_result(
+                        self.memory[self.program_counter.clone() + 3].clone(),
+                        result,
+                        address_mode(2),
+                    );
 
                     self.program_counter += 4;
                 }
                 9 => {
-                    let v = self
-                        .read_argument(&self.memory[self.program_counter.clone() + 1], address_mode(0));
+                    let v = self.read_argument(
+                        &self.memory[self.program_counter.clone() + 1],
+                        address_mode(0),
+                    );
                     self.relative_base += v;
                     self.program_counter += 2;
                 }
