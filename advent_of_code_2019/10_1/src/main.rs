@@ -1,19 +1,19 @@
+use num::Rational;
+use std::cmp::Ordering;
 use std::collections::HashSet;
 use std::io;
 use std::io::{BufRead, BufReader, Read};
-use num::Rational;
-use std::cmp::Ordering;
 
 #[derive(Hash, PartialEq, Eq)]
 enum Line {
     Normal { slope: Rational, b: Rational },
-    Vertical
+    Vertical,
 }
 
 #[derive(Hash, PartialEq, Eq)]
 enum Direction {
     LeftOrBelow,
-    RightOrAbove
+    RightOrAbove,
 }
 
 impl Direction {
@@ -35,7 +35,8 @@ impl Line {
         if p2.0 as isize - p1.0 as isize == 0 {
             Line::Vertical
         } else {
-            let slope =  Rational::from_integer(p2.1 as isize - p1.1 as isize) / Rational::from_integer(p2.0 as isize - p1.0 as isize);
+            let slope = Rational::from_integer(p2.1 as isize - p1.1 as isize)
+                / Rational::from_integer(p2.0 as isize - p1.0 as isize);
             let b = Rational::from_integer(p1.1 as isize) - slope * (p1.0 as isize);
             Line::Normal { slope, b }
         }
@@ -75,12 +76,17 @@ fn visible_from_station(station: (usize, usize), asteroids: &Vec<(usize, usize)>
 fn main() -> io::Result<()> {
     let asteroids = read_asteroids(io::stdin())?;
     let mut most_visible = 0;
+    let mut best_asteroid = None;
 
     for &a in asteroids.iter() {
-        most_visible = most_visible.max(visible_from_station(a, &asteroids));
+        let visible = visible_from_station(a, &asteroids);
+        if visible > most_visible {
+            most_visible = visible;
+            best_asteroid = Some(a);
+        }
     }
 
-    println!("{}", most_visible);
+    println!("{} at {:?}", most_visible, best_asteroid.unwrap());
 
     Ok(())
 }
