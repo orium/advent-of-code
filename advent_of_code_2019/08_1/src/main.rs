@@ -1,6 +1,6 @@
-use std::io;
 use itertools::Itertools;
-use std::io::{Read, BufReader, BufRead};
+use std::io;
+use std::io::{BufRead, BufReader, Read};
 
 const WIDTH: usize = 25;
 const HEIGHT: usize = 6;
