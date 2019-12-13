@@ -315,7 +315,7 @@ fn run_paint_job(computer: &mut Computer) -> HashMap<Position, u8> {
                     direction = match turn_num.to_u8().unwrap() {
                         0 => direction.turn_left(),
                         1 => direction.turn_right(),
-                        _ => panic!()
+                        _ => panic!(),
                     };
                 } else {
                     panic!();
