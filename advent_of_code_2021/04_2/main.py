@@ -7,6 +7,7 @@ class Board:
         self.used_lines = [0, 0, 0, 0, 0]
         self.used_columns = [0, 0, 0, 0, 0]
         self.total_unmarked = 0
+        self.win = False
 
     # Returns true if "bingo".
     def mark(self, number):
@@ -36,15 +37,13 @@ def bingo(board, number):
 def play():
     for n in numbers:
         for board in boards:
-            if board.mark(n):
+            if not board.win and board.mark(n):
+                board.win = True
                 bingo(board, n)
-                return
 
 boards = []
 
 numbers = list(map(lambda n: int(n), input().split(",")))
-
-# print(numbers)
 
 while True:
     try:
