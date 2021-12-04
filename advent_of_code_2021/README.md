@@ -10,3 +10,5 @@ This year I decided to use different languages each problem:
 | 02_2        | prolog      |
 | 03_1        | x86 asm     |
 | 03_2        | C           |
+| 03_1        | python      |
+| 03_2        | python      |
