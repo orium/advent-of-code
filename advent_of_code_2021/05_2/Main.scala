@@ -2,11 +2,27 @@ import scala.io.StdIn.readLine
 import scala.collection.immutable.Range.Inclusive
 
 object Main {
-  def range(a: Int, b: Int): Range.Inclusive =
-    if (a < b) { a to b } else { b to a }
+  def delta(a: Int, b: Int): Int =
+    if (a > b) {
+      -1
+    } else if (a < b) {
+      1
+    } else {
+      0
+    }
+
+  def path(coords: ((Int, Int), (Int, Int))): List[(Int, Int)] = {
+    val ((sx, sy), (dx, dy)) = coords
+
+    if ((sx, sy) == (dx, dy)) {
+      List((sx, sy))
+    } else {
+      (sx, sy) :: path(((sx + delta(sx, dx), sy + delta(sy, dy)), (dx, dy)))
+    }
+  }
 
   def main(args: Array[String]): Unit = {
-    val input: LazyList[((Int, Int), (Int, Int))] =
+    val input: List[((Int, Int), (Int, Int))] =
       LazyList
         .continually(Option(readLine()))
         .takeWhile(l => !l.isEmpty)
@@ -14,14 +30,11 @@ object Main {
         .map(line => line.split(" ").toSeq)
         .map { case Seq(s, _, l) => (s.split(",").toSeq, l.split(",").toSeq) }
         .map { case (Seq(sx, sy), Seq(dx, dy)) => ((sx.toInt, sy.toInt), (dx.toInt, dy.toInt)) }
+        .toList
 
-    val allCoords: LazyList[(Int, Int)] =
+    val allCoords: List[(Int, Int)] =
       input
-        .flatMap {
-          case ((sx, sy), (dx, dy)) if sx == dx => range(sy, dy).map(y => (sx, y))
-          case ((sx, sy), (dx, dy)) if sy == dy => range(sx, dx).map(x => (x, sy))
-          case _ => LazyList.empty
-        }
+        .flatMap(path)
 
     val counts: Map[(Int, Int), Int] =
       allCoords
