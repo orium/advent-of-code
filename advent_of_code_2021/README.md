@@ -12,3 +12,5 @@ This year I decided to use different languages each problem:
 | 03_2        | C           |
 | 04_1        | python      |
 | 04_2        | python      |
+| 05_1        | scala       |
+| 05_2        | scala       |
