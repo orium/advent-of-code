@@ -14,3 +14,5 @@ This year I decided to use different languages each problem:
 | 04_2        | python      |
 | 05_1        | scala       |
 | 05_2        | scala       |
+| 06_1        | haskell     |
+| 06_2        | haskell     |
