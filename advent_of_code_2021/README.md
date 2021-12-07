@@ -16,3 +16,5 @@ This year I decided to use different languages each problem:
 | 05_2        | scala       |
 | 06_1        | haskell     |
 | 06_2        | haskell     |
+| 07_1        | lisp        |
+| 07_2        | lisp        |
