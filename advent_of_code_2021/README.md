@@ -18,3 +18,4 @@ This year I decided to use different languages each problem:
 | 06_2        | haskell     |
 | 07_1        | lisp        |
 | 07_2        | bash        |
+| 08_1        | perl        |
