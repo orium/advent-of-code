@@ -19,3 +19,4 @@ This year I decided to use different languages each problem:
 | 07_1        | lisp        |
 | 07_2        | bash        |
 | 08_1        | perl        |
+| 08_2        | scala       |
