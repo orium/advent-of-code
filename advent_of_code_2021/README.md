@@ -20,3 +20,5 @@ This year I decided to use different languages each problem:
 | 07_2        | bash        |
 | 08_1        | perl        |
 | 08_2        | scala       |
+| 09_1        | lua         |
+| 09_2        | lua         |
