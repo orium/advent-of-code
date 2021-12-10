@@ -22,3 +22,5 @@ This year I decided to use different languages each problem:
 | 08_2        | scala       |
 | 09_1        | lua         |
 | 09_2        | lua         |
+| 10_1        | rust        |
+| 10_2        | rust        |
