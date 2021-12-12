@@ -30,6 +30,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "advent_of_code_2021_12_1"
+version = "0.1.0"
+
+[[package]]
+name = "advent_of_code_2021_12_2"
+version = "0.1.0"
+
+[[package]]
 name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

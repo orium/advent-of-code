@@ -26,3 +26,5 @@ This year I decided to use different languages each problem:
 | 10_2        | rust        |
 | 11_1        | rust        |
 | 11_2        | rust        |
+| 12_1        | rust        |
+| 12_2        | rust        |
