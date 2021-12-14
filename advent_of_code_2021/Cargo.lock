@@ -46,6 +46,20 @@ name = "advent_of_code_2021_13_2"
 version = "0.1.0"
 
 [[package]]
+name = "advent_of_code_2021_14_1"
+version = "0.1.0"
+dependencies = [
+ "itertools",
+]
+
+[[package]]
+name = "advent_of_code_2021_14_2"
+version = "0.1.0"
+dependencies = [
+ "itertools",
+]
+
+[[package]]
 name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
