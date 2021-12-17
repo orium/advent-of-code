@@ -24,11 +24,4 @@ This year I decided to use different languages each problem:
 | 09_2        | lua         |
 | 10_1        | rust        |
 | 10_2        | rust        |
-| 11_1        | rust        |
-| 11_2        | rust        |
-| 12_1        | rust        |
-| 12_2        | rust        |
-| 13_1        | rust        |
-| 13_2        | rust        |
-| 14_1        | rust        |
-| 14_2        | rust        |
+| ⋮           | rust        |
