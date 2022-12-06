@@ -87,7 +87,11 @@ fn score(other: RPS, mine: RPS) -> usize {
 }
 
 fn pick_mine(other: RPS, res: RoundResult) -> RPS {
-    [RPS::Rock, RPS::Paper, RPS::Scissors].iter().copied().find(|mine| result(other, *mine) == res).unwrap()
+    [RPS::Rock, RPS::Paper, RPS::Scissors]
+        .iter()
+        .copied()
+        .find(|mine| result(other, *mine) == res)
+        .unwrap()
 }
 
 fn main() {
@@ -95,7 +99,8 @@ fn main() {
 
     for line in INPUT.lines() {
         let (other, res) = line.split_once(" ").unwrap();
-        let (other, res) = (RPS::from_letter(other).unwrap(), RoundResult::from_letter(res).unwrap());
+        let (other, res) =
+            (RPS::from_letter(other).unwrap(), RoundResult::from_letter(res).unwrap());
 
         let mine = pick_mine(other, res);
 
