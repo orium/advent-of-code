@@ -1,10 +1,9 @@
-[workspace]
+[package]
+name = "advent_of_code_2022"
+version = "0.1.0"
+authors = ["Diogo Sousa <diogogsousa@gmail.com>"]
+edition = "2021"
 
-members = [
-    "01_1", "01_2",
-    "02_1", "02_2",
-    "03_1", "03_2",
-    "04_1", "04_2",
-    "05_1", "05_2",
-    "06_1", "06_2",
-]
+[dependencies]
+itertools = "0.10.5"
+scan_fmt = "0.2.6"

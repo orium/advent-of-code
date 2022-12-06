@@ -1,4 +1,4 @@
-const INPUT: &str = include_str!("../input");
+const INPUT: &str = include_str!("../../inputs/05");
 
 fn main() {
     let mut lines = INPUT.lines();

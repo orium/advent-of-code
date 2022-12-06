@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
-use std::io;
-use std::io::{BufRead, BufReader};
+
+const INPUT: &str = include_str!("../../inputs/03");
 
 fn priority(c: char) -> u32 {
     match c {
@@ -10,12 +10,10 @@ fn priority(c: char) -> u32 {
     }
 }
 
-fn main() -> io::Result<()> {
-    let reader = BufReader::new(std::io::stdin());
+fn main() {
     let mut total: u32 = 0;
 
-    for line in reader.lines() {
-        let line = line?;
+    for line in INPUT.lines() {
         let (a, b) = line.split_at(line.len()/2);
         let (a, b) : (BTreeSet<char>, BTreeSet<char>) = (a.chars().collect(), b.chars().collect());
 
@@ -23,6 +21,4 @@ fn main() -> io::Result<()> {
     }
 
     println!("{}", total);
-
-    Ok(())
 }

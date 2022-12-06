@@ -1,4 +1,4 @@
-const INPUT: &str = include_str!("../input");
+const INPUT: &str = include_str!("../../inputs/04");
 
 fn main() {
     let count =

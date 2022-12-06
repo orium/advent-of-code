@@ -1,14 +1,10 @@
-use std::io;
-use std::io::{BufRead, BufReader};
+const INPUT: &str = include_str!("../../inputs/01");
 
-fn main() -> io::Result<()> {
-    let reader = BufReader::new(std::io::stdin());
+fn main() {
     let mut max: usize = 0;
     let mut current: usize = 0;
 
-    for line in reader.lines() {
-        let line = line?;
-
+    for line in INPUT.lines() {
         match line.parse::<usize>() {
             Ok(num) => current += num,
             Err(_) => {
@@ -21,6 +17,4 @@ fn main() -> io::Result<()> {
     assert_eq!(current, 0);
 
     println!("{}", max);
-
-    Ok(())
 }

@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
-use std::io;
-use std::io::{BufRead, BufReader};
+
+const INPUT: &str = include_str!("../../inputs/02");
 
 // Rock defeats Scissors, Scissors defeats Paper, and Paper defeats Rock.
 // A for Rock, B for Paper, and C for Scissors.
@@ -90,12 +90,10 @@ fn pick_mine(other: RPS, res: RoundResult) -> RPS {
     [RPS::Rock, RPS::Paper, RPS::Scissors].iter().copied().find(|mine| result(other, *mine) == res).unwrap()
 }
 
-fn main() -> io::Result<()> {
-    let reader = BufReader::new(std::io::stdin());
+fn main() {
     let mut total_score: usize = 0;
 
-    for line in reader.lines() {
-        let line = line?;
+    for line in INPUT.lines() {
         let (other, res) = line.split_once(" ").unwrap();
         let (other, res) = (RPS::from_letter(other).unwrap(), RoundResult::from_letter(res).unwrap());
 
@@ -107,6 +105,4 @@ fn main() -> io::Result<()> {
     }
 
     println!("{}", total_score);
-
-    Ok(())
 }

@@ -1,7 +1,7 @@
 use std::collections::BTreeSet;
-use std::io;
-use std::io::{BufRead, BufReader};
 use itertools::Itertools;
+
+const INPUT: &str = include_str!("../../inputs/03");
 
 fn priority(c: char) -> u32 {
     match c {
@@ -11,12 +11,10 @@ fn priority(c: char) -> u32 {
     }
 }
 
-fn main() -> io::Result<()> {
-    let reader = BufReader::new(std::io::stdin());
+fn main(){
     let mut total: u32 = 0;
 
-    for (a, b, c) in reader.lines().tuples() {
-        let (a, b, c) = (a?, b?, c?);
+    for (a, b, c) in INPUT.lines().tuples() {
         let (a, b, c): (BTreeSet<char>, BTreeSet<char>, BTreeSet<char>) = (a.chars().collect(), b.chars().collect(), c.chars().collect());
         let intersection: BTreeSet<char> = a.intersection(&b).copied().collect::<BTreeSet<char>>().intersection(&c).copied().collect();
 
@@ -24,6 +22,4 @@ fn main() -> io::Result<()> {
     }
 
     println!("{}", total);
-
-    Ok(())
 }

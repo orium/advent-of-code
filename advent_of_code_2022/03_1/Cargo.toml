@@ -1,7 +1,0 @@
-[package]
-name = "advent_of_code_2022_03_1"
-version = "0.1.0"
-authors = ["Diogo Sousa <diogogsousa@gmail.com>"]
-edition = "2021"
-
-[dependencies]
