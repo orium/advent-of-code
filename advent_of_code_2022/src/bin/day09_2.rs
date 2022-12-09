@@ -35,23 +35,9 @@ fn vector_from_direction(direction: char) -> (isize, isize) {
     }
 }
 
-fn to_zero_neighbour(n: isize) -> isize {
-    match n {
-        0 => 0,
-        n if n < 0 => -1,
-        n if n > 0 => 1,
-        _ => unreachable!(),
-    }
-}
-
 fn tail_move_vector(head: Point, tail: Point) -> (isize, isize) {
     match head.sub(&tail) {
-        (2, y) => (1, to_zero_neighbour(y)),
-        (-2, y) => (-1, to_zero_neighbour(y)),
-
-        (x, 2) => (to_zero_neighbour(x), 1),
-        (x, -2) => (to_zero_neighbour(x), -1),
-
+        (x, y) if x.abs() > 1 || y.abs() > 1 => (x.signum(), y.signum()),
         (_, _) => (0, 0),
     }
 }
