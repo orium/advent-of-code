@@ -62,7 +62,7 @@ fn main() {
         let instruction = Instruction::from_str(line).unwrap();
 
         for cycle in (processor.cycle + 1)..=(processor.cycle + instruction.cycles()) {
-            let sprite = (processor.x-1)..=(processor.x+1);
+            let sprite = (processor.x - 1)..=(processor.x + 1);
             let pos = ((cycle - 1) % 40) as i64;
 
             if sprite.contains(&pos) {
