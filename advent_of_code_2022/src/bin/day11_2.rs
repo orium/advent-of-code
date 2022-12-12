@@ -86,15 +86,8 @@ fn main() {
             right: Operand::from_str(&op_r_str).unwrap(),
         };
 
-        let monkey = Monkey {
-            items,
-            operation,
-            test_divisor,
-            throw_true,
-            throw_false,
-
-            inspections: 0,
-        };
+        let monkey =
+            Monkey { items, operation, test_divisor, throw_true, throw_false, inspections: 0 };
 
         monkeys.push(monkey);
     }
