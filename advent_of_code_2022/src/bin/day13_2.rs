@@ -1,6 +1,6 @@
+use itertools::Itertools;
 use std::cmp::Ordering;
 use std::iter::Peekable;
-use itertools::Itertools;
 
 const INPUT: &str = include_str!("../../inputs/13");
 
@@ -19,14 +19,14 @@ impl Expr {
         Expr::parse_expr(&mut s.chars().peekable())
     }
 
-    fn parse_expr(s: &mut Peekable<impl Iterator<Item=char>>) -> Expr {
+    fn parse_expr(s: &mut Peekable<impl Iterator<Item = char>>) -> Expr {
         match s.peek().unwrap() {
             '[' => Expr::parse_list(s),
             _ => Expr::parse_num(s),
         }
     }
 
-    fn parse_list(s: &mut Peekable<impl Iterator<Item=char>>) -> Expr {
+    fn parse_list(s: &mut Peekable<impl Iterator<Item = char>>) -> Expr {
         let mut v: Vec<Expr> = Vec::new();
 
         assert!(s.next().unwrap() == '[');
@@ -44,7 +44,7 @@ impl Expr {
         Expr::List(v)
     }
 
-    fn parse_num(s: &mut Peekable<impl Iterator<Item=char>>) -> Expr {
+    fn parse_num(s: &mut Peekable<impl Iterator<Item = char>>) -> Expr {
         let num = s
             .peeking_take_while(|c| c.is_digit(10))
             .map(|c| c.to_digit(10).unwrap() as u64)
@@ -74,10 +74,10 @@ impl Ord for Expr {
                 }
 
                 l.len().cmp(&r.len())
-            },
+            }
 
-            (l@Expr::Num(_), r@Expr::List(_)) => Expr::list_singleton(l.clone()).cmp(r),
-            (l@Expr::List(_), r@Expr::Num(_)) => l.cmp(&Expr::list_singleton(r.clone())),
+            (l @ Expr::Num(_), r @ Expr::List(_)) => Expr::list_singleton(l.clone()).cmp(r),
+            (l @ Expr::List(_), r @ Expr::Num(_)) => l.cmp(&Expr::list_singleton(r.clone())),
         }
     }
 }
@@ -97,12 +97,8 @@ fn main() {
 
     packets.sort();
 
-    let r: usize = packets
-        .iter()
-        .enumerate()
-        .filter(|(_, e)| divs.contains(e))
-        .map(|(i, _)| i + 1)
-        .product();
+    let r: usize =
+        packets.iter().enumerate().filter(|(_, e)| divs.contains(e)).map(|(i, _)| i + 1).product();
 
     println!("{}", r);
 }
