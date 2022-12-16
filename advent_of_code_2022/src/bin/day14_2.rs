@@ -10,6 +10,7 @@ fn add_line(matrix: &mut Array2<char>, (sx, sy): (usize, usize), (ex, ey): (usiz
     }
 }
 
+#[allow(dead_code)]
 fn print(matrix: &Array2<char>) {
     for y in 0..13 {
         for x in 488..514 {

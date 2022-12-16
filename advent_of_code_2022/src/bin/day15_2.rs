@@ -58,10 +58,6 @@ fn main() {
             .filter(|&x| X_MIN_COORD <= x && x <= X_MAX_COORD);
         let dark = candidates.find(|x| ranges.iter().all(|r| !r.contains(x)));
 
-        if y % 100_000 == 0 {
-            println!("y={}", y);
-        }
-
         if let Some(x) = dark {
             println!("{:?}", (x, y));
             println!("{}", x * 4_000_000 + y);
