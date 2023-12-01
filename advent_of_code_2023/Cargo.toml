@@ -1,0 +1,15 @@
+[package]
+name = "advent_of_code_2023"
+version = "0.1.0"
+authors = ["Diogo Sousa <diogogsousa@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+itertools = "0.12.0"
+scan_fmt = "0.2.6"
+ndarray = "0.15.6"
+num = "0.4.1"
+
+[profile.dev]
+opt-level = 3
+lto = "thin"
