@@ -11,5 +11,5 @@ fn main() {
         })
         .sum();
 
-    println!("{}", v);
+    println!("{v}");
 }

@@ -18,7 +18,7 @@ impl Rgb {
         Rgb { red: self.red + r, green: self.green + g, blue: self.blue + b }
     }
 
-    fn max(self, other: Rgb) -> Rgb {
+    fn max(&self, other: &Rgb) -> Rgb {
         Rgb {
             red: self.red.max(other.red),
             green: self.green.max(other.green),
@@ -51,9 +51,9 @@ fn main() {
         .lines()
         .map(|line| {
             let game = scan_fmt!(line, "Game {*d}: {/.*$/}", String).unwrap();
-            parse_game(&game).reduce(Rgb::max).unwrap().pow()
+            parse_game(&game).reduce(|p, q| p.max(&q)).unwrap().pow()
         })
         .sum();
 
-    println!("{}", v);
+    println!("{v}");
 }

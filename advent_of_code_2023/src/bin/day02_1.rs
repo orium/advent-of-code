@@ -57,5 +57,5 @@ fn main() {
         .map(|(game_id, _)| game_id)
         .sum();
 
-    println!("{}", v);
+    println!("{v}");
 }
