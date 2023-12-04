@@ -21,3 +21,4 @@ correctness = "deny"
 
 match-bool = "allow"
 cast-lossless = "allow"
+cast_possible_truncation = "allow"
