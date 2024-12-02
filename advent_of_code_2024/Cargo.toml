@@ -1,0 +1,23 @@
+[package]
+name = "advent_of_code_2024"
+version = "0.1.0"
+authors = ["Diogo Sousa <diogogsousa@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+itertools = "0.13.0"
+scan_fmt = "0.2.6"
+
+[profile.dev]
+opt-level = 3
+lto = "thin"
+
+[lints.clippy]
+all = { level = "warn", priority = -2 }
+correctness = { level = "deny", priority = -1 }
+pedantic = { level = "warn", priority = -2 }
+
+match-bool = "allow"
+cast-lossless = "allow"
+cast_possible_truncation = "allow"
+explicit-iter-loop = "allow"
