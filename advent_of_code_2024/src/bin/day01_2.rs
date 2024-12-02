@@ -12,7 +12,7 @@ fn main() {
 
     let r: i64 = values_a
         .into_iter()
-        .map(|v| v * (b_counts.get(&v).cloned().unwrap_or_default() as i64))
+        .map(|v| v * (b_counts.get(&v).copied().unwrap_or_default() as i64))
         .sum();
 
     println!("{r}");
