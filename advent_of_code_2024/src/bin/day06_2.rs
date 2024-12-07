@@ -1,6 +1,6 @@
 use itertools::Itertools;
-use std::collections::HashSet;
 use rpds::HashTrieSet;
+use std::collections::HashSet;
 
 const INPUT: &str = include_str!("../../inputs/06");
 
@@ -67,11 +67,7 @@ impl Room {
     }
 
     fn with_obstruction(&self, pos: (i32, i32)) -> Room {
-        Room {
-            obstructions: self.obstructions.insert(pos),
-            height: self.height,
-            width: self.width,
-        }
+        Room { obstructions: self.obstructions.insert(pos), height: self.height, width: self.width }
     }
 }
 
