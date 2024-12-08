@@ -1,3 +1,4 @@
+use aoc_utils::MyItertools;
 use itertools::Itertools;
 use ndarray::{Array2, Axis};
 
@@ -35,7 +36,7 @@ fn find_in_direction(
 }
 
 fn find(matrix: &Array2<char>, start_coords: (usize, usize)) -> usize {
-    let deltas = (-1..=1).cartesian_product(-1..=1).filter(|&coords| coords != (0, 0));
+    let deltas = (-1..=1).cartesian_product_self().filter(|&coords| coords != (0, 0));
 
     deltas
         .map(|direction| find_in_direction(matrix, start_coords, direction))

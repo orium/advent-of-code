@@ -1,0 +1,13 @@
+[package]
+name = "aoc-utils"
+version = "0.1.0"
+authors = ["Diogo Sousa <diogogsousa@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+itertools = "0.13.0"
+
+[lints.clippy]
+all = { level = "warn", priority = -2 }
+correctness = { level = "deny", priority = -1 }
+pedantic = { level = "warn", priority = -2 }

@@ -1,3 +1,4 @@
+use aoc_utils::MyItertools;
 use itertools::Itertools;
 use std::collections::HashMap;
 
@@ -52,8 +53,7 @@ fn main() {
         .flat_map(|same_freq_antennas| {
             same_freq_antennas
                 .iter()
-                .cartesian_product(same_freq_antennas)
-                .filter(|(a, b)| a != b)
+                .cartesian_product_self_skip_same()
                 .flat_map(|(&a, &b)| left_antinodes(&map, a, b))
         })
         .unique()

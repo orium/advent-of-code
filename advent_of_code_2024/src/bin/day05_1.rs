@@ -1,3 +1,4 @@
+use aoc_utils::MyItertools;
 use itertools::Itertools;
 use scan_fmt::scan_fmt;
 
@@ -7,8 +8,8 @@ fn is_correct(rules: &[(u64, u64)], order: &[u64]) -> bool {
     rules.iter().all(|(l, h)| {
         order
             .iter()
-            .position(|v| v == l)
-            .zip(order.iter().position(|v| v == h))
+            .position_of(l)
+            .zip(order.iter().position_of(h))
             .map_or(true, |(il, ih)| il < ih)
     })
 }
