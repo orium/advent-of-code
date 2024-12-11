@@ -1,6 +1,6 @@
-use std::collections::HashSet;
-use ndarray::{Array2, Axis};
 use itertools::Itertools;
+use ndarray::{Array2, Axis};
+use std::collections::HashSet;
 
 const INPUT: &str = include_str!("../../inputs/10");
 
@@ -31,13 +31,12 @@ fn go(map: &Array2<i8>, (x, y): (usize, usize), tops: &mut HashSet<(usize, usize
         .into_iter()
         .map(|(dx, dy)| ((x as isize + dx) as usize, (y as isize + dy) as usize))
         .filter(|(nx, ny)| map[(*nx, *ny)] == next)
-        .map(|pos| go(map, pos, tops))
-        .collect()
+        .for_each(|pos| go(map, pos, tops));
 }
 
 fn main() {
     let map = load_matrix();
-    
+
     let r: usize = (0..map.len_of(Axis(0)))
         .cartesian_product(0..map.len_of(Axis(1)))
         .filter(|(x, y)| map[(*x, *y)] == 0)
