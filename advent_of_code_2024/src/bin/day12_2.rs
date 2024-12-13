@@ -44,17 +44,14 @@ fn print(map: &Array2<char>) {
     }
 }
 
-fn scan(iter: impl Iterator<Item = impl Iterator<Item = char> + Clone> + Clone) -> usize {
-    let count = |u, d| u != '█' && d == '█';
-
+fn scan(iter: impl Iterator<Item = impl Iterator<Item = char> + Clone>) -> usize {
     iter.tuple_windows()
         .map(|(row_up, row_down)| {
             row_up
-                .into_iter()
                 .zip(row_down)
-                .map(|(up, down)| count(up, down))
+                .map(|(up, down)| up != '█' && down == '█')
                 .dedup()
-                .filter(|v| *v)
+                .filter(|&v| v)
                 .count()
         })
         .sum()
@@ -76,7 +73,6 @@ fn main() {
             '⋅' => (0, 0),
             _ => {
                 let area = fill(&mut map, '█', pos);
-
                 let sides = sides(&map);
 
                 fill(&mut map, '⋅', pos);
