@@ -5,6 +5,8 @@ authors = ["Diogo Sousa <diogogsousa@gmail.com>"]
 edition = "2024"
 
 [dependencies]
+itertools = "0.14.0"
+scan_fmt = "0.2.6"
 
 [profile.dev]
 opt-level = 3
