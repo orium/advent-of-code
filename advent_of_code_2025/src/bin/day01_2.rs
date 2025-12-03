@@ -12,7 +12,7 @@ fn main() {
         };
         let amount: i32 = line[1..].parse().unwrap();
 
-        println!("current {}", current);
+        println!("current {current}");
         println!("{line}");
 
         let inc = match direction {

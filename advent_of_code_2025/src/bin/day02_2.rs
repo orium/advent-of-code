@@ -6,7 +6,7 @@ const INPUT: &str = include_str!("../../inputs/02");
 fn is_invalid(id: u64) -> bool {
     let id: Vec<char> = id.to_string().chars().collect_vec();
 
-    (2..=id.len()).filter(|d| id.len() % d == 0).any(|div| {
+    (2..=id.len()).filter(|d| id.len().is_multiple_of(*d)).any(|div| {
         let pattern_len = id.len() / div;
         let pattern = &id[0..pattern_len];
         let repeated: Vec<char> =
