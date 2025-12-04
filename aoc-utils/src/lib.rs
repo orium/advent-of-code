@@ -1,5 +1,7 @@
 use itertools::Itertools;
+use ndarray::{Array2, Axis};
 use std::borrow::Borrow;
+use std::fmt::Display;
 
 pub trait MyItertools: Iterator {
     #[inline]
@@ -41,3 +43,12 @@ pub trait MyItertools: Iterator {
 }
 
 impl<T> MyItertools for T where T: Iterator + ?Sized {}
+
+pub fn print_matrix<T: Display>(matrix: &Array2<T>) {
+    for y in 0..matrix.len_of(Axis(1)) {
+        for x in 0..matrix.len_of(Axis(0)) {
+            print!("{}", matrix[(x, y)]);
+        }
+        println!();
+    }
+}

@@ -8,6 +8,7 @@ edition = "2024"
 itertools = "0.14.0"
 scan_fmt = "0.2.6"
 ndarray = "0.17.1"
+aoc-utils = { path = "../aoc-utils" }
 
 [profile.dev]
 opt-level = 3
